@@ -8,7 +8,7 @@
 //! yabai::send("--focus space 2");
 //!```
 //!
-//! Send a command using the `Command` type:
+//! Send a command using the `yabai::Command` type:
 //! ```
 //! let command: yabai::Command = yabai::Command::FocusSpace(yabai::SpaceOption::Recent);
 //! yabai::send_command(command)?;

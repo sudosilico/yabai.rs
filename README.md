@@ -27,19 +27,22 @@ You can send commands in a `yabai -m`-like fashion, using a string:
 yabai::send("--focus space 2");
 ```
 
-Alternatively, you can use the `Command` enum:
+Alternatively, you can use the `Command` enum for more strongly-typed inputs:
 
 ```rust
 let command = yabai::Command::FocusSpace(yabai::SpaceOption::Recent);
+
 yabai::send_command(command)?;
 ```
 
-## Responses
+## Queries
 
-The `send` and `send_command` functions both return a `Result<Option<String>>`, with the `String` containing a possible JSON response from the yabai server:
-
-
+Displays, spaces, and windows can all be queried:
 
 ```rust
-let displays = yabai::query_displays()?;
+let displays = yabai::query_displays()?; // Vec<DisplayInfo>
+
+let spaces = yabai::query_spaces()?; // Vec<SpaceInfo>
+
+let windows = yabai::query_windows()?; // Vec<WindowInfo>
 ```
