@@ -6,6 +6,7 @@ license = "MIT"
 keywords = ["yabai"]
 categories = ["api-bindings", "command-line-utilities"]
 description = "A Rust library for communicating with the yabai tiling window manager."
+repository = "https://github.com/sudosilico/yabai.rs/"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
