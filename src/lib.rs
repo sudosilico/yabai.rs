@@ -68,6 +68,10 @@ fn send_raw(command: &str) -> anyhow::Result<Option<String>> {
 
     let bytes = stream.read_to_end(&mut buffer)?;
 
+    if bytes == 0 {
+        return Ok(None);
+    }
+
     if buffer[0] == 0x07 {
         let rest = buffer[1..].to_vec();
         let error_message = String::from_utf8(rest)?;
@@ -80,11 +84,7 @@ fn send_raw(command: &str) -> anyhow::Result<Option<String>> {
         return Err(anyhow!(error));
     }
 
-    if bytes > 0 {
-        return Ok(Some(String::from_utf8(buffer)?));
-    }
-
-    Ok(None)
+    Ok(Some(String::from_utf8(buffer)?))
 }
 
 /// Send a `yabai::Command` to yabai.
@@ -95,7 +95,7 @@ fn send_raw(command: &str) -> anyhow::Result<Option<String>> {
 /// let command = yabai::Command::FocusSpace(yabai::SpaceOption::Recent);
 /// yabai::send_command(command)?;
 /// ```
-pub fn send_command(command: Command) -> anyhow::Result<Option<String>> {
+pub fn send_command(command: &Command) -> anyhow::Result<Option<String>> {
     let result = match command {
         Command::FocusSpace(option) => match option {
             FocusSpaceOption::Space(space) => send(&format!("space --focus {}", space))?,
@@ -143,4 +143,12 @@ pub fn query_windows() -> anyhow::Result<Vec<WindowInfo>> {
         Some(str) => Ok(serde_json::from_str::<Vec<WindowInfo>>(&str)?),
         None => Err(anyhow!("No result from yabai query --windows")),
     }
+}
+
+pub fn focus_window(window: u32) -> anyhow::Result<Option<String>> {
+    send_command(&Command::FocusWindow(window))
+}
+
+pub fn focus_space(space: u32) -> anyhow::Result<Option<String>> {
+    send_command(&Command::FocusSpace(FocusSpaceOption::Space(space)))
 }
