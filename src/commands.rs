@@ -5,6 +5,7 @@ use strum_macros::Display;
 ///
 /// Used with the `yabai::send_command` function.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
 pub enum Command {
     FocusSpace(FocusSpaceOption),
     RotateSpace(SpaceRotation),

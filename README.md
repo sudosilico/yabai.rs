@@ -10,7 +10,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-yabai = "0.1.0"
+yabai = "0.3.0"
 ```
 
 or using `cargo add`:
