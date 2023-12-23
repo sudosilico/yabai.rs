@@ -1,8 +1,6 @@
 # yabai.rs
 
-A Rust library for communicating with the [yabai](https://github.com/koekeishiya/yabai) tiling window manager.
-
-It sends client commands directly to the yabai server via UnixStream sockets, acting as a Rust equivalent of `yabai -m`.
+A Rust library for communicating with the [yabai](https://github.com/koekeishiya/yabai) tiling window manager's [ipc socket](https://github.com/koekeishiya/yabai/wiki/Commands#message-passing-interface), acting as a Rust equivalent of the `yabai -m` command.
 
 ## Installation
 
@@ -10,7 +8,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-yabai = "0.3.0"
+yabai = "0.4.0"
 ```
 
 or using `cargo add`:
@@ -21,7 +19,7 @@ cargo add yabai
 
 ## Sending Commands
 
-You can send commands in a `yabai -m`-like fashion, using a string:
+You can send commands in a `yabai -m` like fashion, using a string:
 
 ```rust
 yabai::send("--focus space 2");

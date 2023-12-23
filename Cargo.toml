@@ -1,11 +1,11 @@
 [package]
 name = "yabai"
-version = "0.3.0"
+version = "0.4.0"
 edition = "2021"
 license = "MIT"
 keywords = ["yabai"]
 categories = ["api-bindings", "command-line-utilities"]
-description = "A Rust library for communicating with the yabai tiling window manager."
+description = "A crate for communicating with the yabai tiling window manager."
 repository = "https://github.com/sudosilico/yabai.rs/"
 
 [dependencies]
