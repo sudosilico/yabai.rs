@@ -1,6 +1,6 @@
 [package]
 name = "yabai"
-version = "0.4.0"
+version = "0.5.0"
 edition = "2021"
 license = "MIT"
 keywords = ["yabai"]
@@ -8,12 +8,17 @@ categories = ["api-bindings", "command-line-utilities"]
 description = "A crate for communicating with the yabai tiling window manager."
 repository = "https://github.com/sudosilico/yabai.rs/"
 
+[features]
+default = ["python"]
+python = ["dep:pyo3"]
+
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
-strum = "0.24"
-strum_macros = "0.24"
+strum = "0.26.2"
+strum_macros = "0.26.2"
 serde_json = "1.0"
 anyhow = "1.0"
 byteorder = "1.4.3"
 thiserror = "1.0.40"
 lazy_static = "1.4.0"
+pyo3 = { version = "0.21.0", optional=true }

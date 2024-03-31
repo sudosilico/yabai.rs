@@ -1,42 +1,50 @@
 use serde::{Deserialize, Serialize};
 use strum_macros::Display;
 
+#[cfg(feature = "python")]
+use pyo3::prelude::*;
+
 /// An **enum** representing a command that can be sent to yabai.
 ///
 /// Used with the `yabai::send_command` function.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
+#[cfg_attr(feature = "python", pyclass)]
 pub enum Command {
-    FocusSpace(FocusSpaceOption),
-    RotateSpace(SpaceRotation),
-    BalanceSpace,
-    MoveActiveWindowToSpace(u32),
-    FocusWindow(u32),
-    FocusWindowDirection(Direction),
-    SwapWindowDirection(Direction),
-    WarpWindowDirection(Direction),
-    ToggleWindowFloating,
-    ToggleZoomFullscreen,
+    FocusSpace { option: FocusSpaceOption },
+    RotateSpace { rotation: SpaceRotation },
+    BalanceSpace {},
+    MoveActiveWindowToSpace { space: u32 },
+    FocusWindow { window: u32 },
+    FocusWindowDirection { direction: Direction },
+    SwapWindowDirection { direction: Direction },
+    WarpWindowDirection { direction: Direction },
+    ToggleWindowFloating {},
+    ToggleZoomFullscreen {},
 }
 
 /// An **enum** representing the options passed to the `space --focus` command.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, Display)]
+#[cfg_attr(feature = "python", pyclass)]
 pub enum FocusSpaceOption {
     #[strum(serialize = "next")]
-    Next,
+    Next {},
     #[strum(serialize = "prev")]
-    Prev,
+    Prev {},
     #[strum(serialize = "first")]
-    First,
+    First {},
     #[strum(serialize = "last")]
-    Last,
+    Last {},
     #[strum(serialize = "recent")]
-    Recent,
-    Space(u32),
+    Recent {},
+    Space {
+        space: u32,
+    },
 }
 
 /// An **enum** representing the options passed to the `space --rotate` command.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, Display)]
+#[cfg_attr(feature = "python", pyclass)]
 pub enum SpaceRotation {
     #[strum(serialize = "90")]
     Rotate90,
@@ -48,6 +56,7 @@ pub enum SpaceRotation {
 
 /// An **enum** representing a cardinal direction.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize, Display)]
+#[cfg_attr(feature = "python", pyclass)]
 pub enum Direction {
     #[strum(serialize = "north")]
     North,
@@ -62,6 +71,7 @@ pub enum Direction {
 /// Information about a mission control space.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
+#[cfg_attr(feature = "python", pyclass)]
 pub struct SpaceInfo {
     pub id: u32,
     pub uuid: String,
@@ -79,6 +89,7 @@ pub struct SpaceInfo {
 
 /// Information about a display.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[cfg_attr(feature = "python", pyclass)]
 pub struct DisplayInfo {
     pub id: u32,
     pub uuid: String,
@@ -90,6 +101,7 @@ pub struct DisplayInfo {
 /// Information about a window.
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "kebab-case")]
+#[cfg_attr(feature = "python", pyclass)]
 pub struct WindowInfo {
     pub id: u32,
     pub pid: u32,
@@ -123,6 +135,7 @@ pub struct WindowInfo {
 
 /// A rectangle representing the position and size of a window or display.
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[cfg_attr(feature = "python", pyclass)]
 pub struct Frame {
     pub x: f32,
     pub y: f32,

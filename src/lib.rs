@@ -97,19 +97,25 @@ fn send_raw(command: &str) -> anyhow::Result<Option<String>> {
 /// ```
 pub fn send_command(command: &Command) -> anyhow::Result<Option<String>> {
     let result = match command {
-        Command::FocusSpace(option) => match option {
-            FocusSpaceOption::Space(space) => send(&format!("space --focus {}", space))?,
+        Command::FocusSpace { option } => match option {
+            FocusSpaceOption::Space { space } => send(&format!("space --focus {}", space))?,
             named_option => send(&format!("space --focus {named_option}"))?,
         },
-        Command::RotateSpace(rotation) => send(&format!("space --rotate {}", rotation))?,
-        Command::BalanceSpace => send("space --balance")?,
-        Command::MoveActiveWindowToSpace(space) => send(&format!("window --space {}", space))?,
-        Command::FocusWindow(window) => send(&format!("window --focus {}", window))?,
-        Command::FocusWindowDirection(dir) => send(&format!("window --focus {}", dir))?,
-        Command::SwapWindowDirection(dir) => send(&format!("window --swap {}", dir))?,
-        Command::WarpWindowDirection(warp) => send(&format!("window --warp {}", warp))?,
-        Command::ToggleWindowFloating => send("window --toggle float")?,
-        Command::ToggleZoomFullscreen => send("window --toggle zoom-fullscreen")?,
+        Command::RotateSpace { rotation } => send(&format!("space --rotate {}", rotation))?,
+        Command::BalanceSpace {} => send("space --balance")?,
+        Command::MoveActiveWindowToSpace { space } => send(&format!("window --space {}", space))?,
+        Command::FocusWindow { window } => send(&format!("window --focus {}", window))?,
+        Command::FocusWindowDirection { direction } => {
+            send(&format!("window --focus {}", direction))?
+        }
+        Command::SwapWindowDirection { direction } => {
+            send(&format!("window --swap {}", direction))?
+        }
+        Command::WarpWindowDirection { direction } => {
+            send(&format!("window --warp {}", direction))?
+        }
+        Command::ToggleWindowFloating {} => send("window --toggle float")?,
+        Command::ToggleZoomFullscreen {} => send("window --toggle zoom-fullscreen")?,
     };
 
     Ok(result)
@@ -146,9 +152,11 @@ pub fn query_windows() -> anyhow::Result<Vec<WindowInfo>> {
 }
 
 pub fn focus_window(window: u32) -> anyhow::Result<Option<String>> {
-    send_command(&Command::FocusWindow(window))
+    send_command(&Command::FocusWindow { window })
 }
 
 pub fn focus_space(space: u32) -> anyhow::Result<Option<String>> {
-    send_command(&Command::FocusSpace(FocusSpaceOption::Space(space)))
+    send_command(&Command::FocusSpace {
+        option: FocusSpaceOption::Space { space },
+    })
 }
