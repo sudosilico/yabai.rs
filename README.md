@@ -28,7 +28,7 @@ yabai::send("--focus space 2");
 Alternatively, you can use the `Command` enum for more strongly-typed inputs:
 
 ```rust
-let command = yabai::Command::FocusSpace(yabai::SpaceOption::Recent);
+let command = yabai::Command::FocusSpace { option: yabai::SpaceOption::Recent };
 
 yabai::send_command(command)?;
 ```
