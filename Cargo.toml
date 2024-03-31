@@ -9,7 +9,7 @@ description = "A crate for communicating with the yabai tiling window manager."
 repository = "https://github.com/sudosilico/yabai.rs/"
 
 [features]
-default = ["python"]
+default = []
 python = ["dep:pyo3"]
 
 [dependencies]
