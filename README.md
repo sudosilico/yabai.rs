@@ -15,6 +15,7 @@ or using `cargo add`:
 
 ```sh
 cargo add yabai
+
 ```
 
 ## Sending Commands
@@ -44,3 +45,7 @@ let spaces = yabai::query_spaces()?; // Vec<SpaceInfo>
 
 let windows = yabai::query_windows()?; // Vec<WindowInfo>
 ```
+
+## Cargo Features
+
+- `"python"` - Adds `pyo3` derive attributes to yabai command enums.
